@@ -1,10 +1,10 @@
 /****************************************************************************
-    Copyright (C) 2002,2003,2004 Alex Shepherd
+    Copyright (C) 2004 Alex Shepherd
 
     This library is free software; you can redistribute it and/or
-    modify it under the Serials of the GNU Lesser General Public
+    modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
+    version 3 of the License, or (at your option) any later version.
 
     This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,18 +17,20 @@
 
 *****************************************************************************
 
- Title :   LocoNet Infrared TV/VCR Remote controlled Throttle
- Author:   Alex Shepherd <kiwi64ajs@sourceforge.net>
- Date:     4-Dec-2004
- Software: AVR-GCC
- Target:   AtMega8
+ Title : Arduino DenshaDeGo Loconet Throttle
+ Author: Daniel Guisado Serra <dguisado@gmail.com>
+ Date:   7/4/2019
+ 
+ Based on example:
+    Title :   LocoNet Serial Terminal Throttle
+    Author:   Alex Shepherd <kiwi64ajs@gmail.com>
+    Date:     9-Mar-2017
+    Target:   ATMega328 Arduino
 
  DESCRIPTION
-    This project is a LocoNet throttle which gets it commands from a TV/VCR
-	Infrared remote control. Initially this will only work with the Sony SIRCS
-	remotes as this is what I have several of but support for others will
-	probably be added.
-	
+  This project is a LocoNet throttle using a DenshaDeGo PSX joystick.
+  You need the PSX library (contained in the same GitHub repository),
+  and the last version of Loconet libraries (1.0.7).
 *****************************************************************************/
 
 #include <LocoNet.h>
@@ -209,7 +211,7 @@ void loop()
       else
       {
         Throttle.setFunction(0, 0);
-        Throttle.freeAddress(locoarray[locoindex]);
+        Throttle.freeAddressForce(locoarray[locoindex]); //Throttle.freeAddress(locoarray[locoindex]);
         Throttle.releaseAddress();
       }
     }
@@ -230,7 +232,7 @@ void loop()
       else
       {
         Throttle.setFunction(0, 0);
-        Throttle.freeAddress(locoarray[locoindex]);
+        Throttle.freeAddressForce(locoarray[locoindex]); //Throttle.freeAddress(locoarray[locoindex]);
         Throttle.releaseAddress();
       }
     }
@@ -312,7 +314,7 @@ void loop()
     switch(inChar){
       case 'A': Throttle.setAddress(12);
                 break;
-      case 'X': Throttle.freeAddress(12);
+      case 'X': Throttle.freeAddressForce(12); //case 'X': Throttle.freeAddress(12);
                 break;
       case 'Q': Throttle.releaseAddress(); 
                 break;
